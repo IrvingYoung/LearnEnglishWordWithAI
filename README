@@ -1,0 +1,7 @@
+This is a application help you to learn English words integrate with LLM by MCP.
+
+Key Features:
+    1. The user proivde the English word they encounter in daily lives as input to LLM.
+    2. The LLM should use MCP tools to store the word related information to a database. the information should include the Chinese translation in detail and the defination in English. and also give some example using that word.
+    3. The MCP server should implement the tools API for being invoked by LLM.
+    
