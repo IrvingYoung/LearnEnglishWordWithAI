@@ -15,15 +15,28 @@ pip install fastmcp
 
 2. Install other dependencies:
 ```bash
-pip install requests sqlite3
+pip install -r requirements_mcp.txt
 ```
 
 3. Run the MCP server:
+
+For stdio transport (default):
 ```bash
 python mcp_server.py
 ```
 
-By default, the server runs on http://localhost:5000
+For SSE transport:
+```bash
+python mcp_server.py --transport sse --host localhost --port 5000
+```
+
+Transport options:
+- `stdio`: Standard input/output transport (default)
+- `sse`: Server-Sent Events transport over HTTP
+  - `--host`: Host to bind to (default: localhost)
+  - `--port`: Port to bind to (default: 5000)
+
+When using SSE transport, the server will be available at `http://<host>:<port>`.
 
 ## MCP Tools and Resources
 

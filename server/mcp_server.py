@@ -4,12 +4,24 @@ from datetime import datetime, timedelta
 import os
 import sqlite3
 from typing import List, Dict, Optional, Any, Union
+import argparse
 
 # Create an MCP server for English Word Learning
 mcp = FastMCP("EnglishWordLearning")
 
 # Initialize SQLite database
 DB_PATH = os.path.join(os.path.dirname(__file__), 'english_words.db')
+
+def parse_args():
+    """Parse command line arguments"""
+    parser = argparse.ArgumentParser(description='English Word Learning MCP Server')
+    parser.add_argument('--transport', type=str, choices=['stdio', 'sse'], default='stdio',
+                      help='Transport type to use (stdio or sse)')
+    parser.add_argument('--host', type=str, default='localhost',
+                      help='Host to bind to when using SSE transport')
+    parser.add_argument('--port', type=int, default=5000,
+                      help='Port to bind to when using SSE transport')
+    return parser.parse_args()
 
 def init_db():
     """Initialize the database with the necessary tables"""
@@ -764,5 +776,13 @@ def removeWordByText(word: str) -> Dict[str, Any]:
 #         }
 
 if __name__ == "__main__":
-    # Start the MCP server
-    mcp.run(transport="stdio") 
+    # Parse command line arguments
+    args = parse_args()
+    
+    # Start the MCP server with the specified transport
+    if args.transport == 'sse':
+        mcp.settings.host = args.host
+        mcp.settings.port = args.port
+        mcp.run(transport="sse")
+    else:
+        mcp.run(transport="stdio") 

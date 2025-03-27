@@ -1,9 +1,21 @@
 import requests
 import json
 import time
+import argparse
 
 # Base URL for the MCP server
 BASE_URL = 'http://localhost:5000'
+
+def parse_args():
+    """Parse command line arguments"""
+    parser = argparse.ArgumentParser(description='Test English Word Learning MCP Server')
+    parser.add_argument('--transport', type=str, choices=['stdio', 'sse'], default='sse',
+                      help='Transport type to use for testing (stdio or sse)')
+    parser.add_argument('--host', type=str, default='localhost',
+                      help='Host when using SSE transport')
+    parser.add_argument('--port', type=int, default=5000,
+                      help='Port when using SSE transport')
+    return parser.parse_args()
 
 def test_word_management_api():
     """Test the Word Management API tools via MCP"""
@@ -211,8 +223,13 @@ def test_word_management_api():
     print("\nAll tests completed successfully!")
 
 if __name__ == "__main__":
-    # Give the server a moment to start if needed
-    print("Please make sure the MCP server is running at http://localhost:5000")
+    args = parse_args()
+    
+    if args.transport == 'sse':
+        print(f"\nPlease make sure the MCP server is running with SSE transport at http://{args.host}:{args.port}")
+    else:
+        print("\nPlease make sure the MCP server is running with stdio transport")
+    
     print("Press Enter to continue with the tests...")
     input()
     
