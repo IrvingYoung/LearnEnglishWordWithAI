@@ -235,14 +235,14 @@ def getWord(word_id: int = None, word: str = None) -> Dict[str, Any]:
         }
 
 @mcp.tool()
-def updateWord(word_id: int, fieldToUpdate: str, newValue: Any) -> Dict[str, Any]:
+def updateWord(word_id: int, fieldToUpdate: str, newValue: Union[str, List[str]]) -> Dict[str, Any]:
     """
     Update information for an existing word
     
     Args:
         word_id: Word identifier
         fieldToUpdate: Field to be updated
-        newValue: New value for the field
+        newValue: New value for the field (string for word/pronunciation/notes, list for translations/definitions/examples)
         
     Returns:
         Updated word information
